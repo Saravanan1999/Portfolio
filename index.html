@@ -373,8 +373,18 @@
     // ——— Setup scene/camera/renderer exactly as before ———
     const canvas    = document.getElementById('heroCanvas');
     const scene     = new THREE.Scene();
-    // Adjust FOV to be wider to accommodate the full screen
-    const camera    = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.1, 1000);
+    
+    // Replace perspective camera with orthographic camera
+    const aspect = window.innerWidth / window.innerHeight;
+    const frustumSize = 20;
+    const camera = new THREE.OrthographicCamera(
+      frustumSize * aspect / -2,
+      frustumSize * aspect / 2,
+      frustumSize / 2,
+      frustumSize / -2,
+      0.1,
+      1000
+    );
     const renderer  = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
     
     // Add this function to check for nearby nodes
@@ -400,12 +410,17 @@
       renderer.setSize(width, height, false);
       renderer.setPixelRatio(dpr);
       
-      // Update camera aspect ratio
-      camera.aspect = width / height;
+      // Update orthographic camera
+      const aspect = width / height;
+      const frustumSize = 20;
+      camera.left = -frustumSize * aspect / 2;
+      camera.right = frustumSize * aspect / 2;
+      camera.top = frustumSize / 2;
+      camera.bottom = -frustumSize / 2;
       camera.updateProjectionMatrix();
       
-      // Set a fixed camera distance that works well for node creation
-      camera.position.z = 15;
+      // Set camera position
+      camera.position.z = 10;
     }
     
     // Initial setup
@@ -428,7 +443,7 @@
     let drawing = false, start = null, previewLine = null;
     
     // geometries & materials
-    const nodeGeo = new THREE.SphereGeometry(0.15, 64, 64);
+    const nodeGeo = new THREE.SphereGeometry(0.25, 64, 64);
     const nodeMat = new THREE.MeshBasicMaterial({ 
       color: 0xffffff,
       transparent: true,
