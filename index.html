@@ -385,13 +385,81 @@
       0.1,
       1000
     );
-    const renderer  = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+    const renderer  = new THREE.WebGLRenderer({ 
+      canvas, 
+      alpha: true, 
+      antialias: true 
+    });
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     
     // Add this function to check for nearby nodes
     function isNearExistingNode(pos) {
       const minDistance = 0.5; // Minimum distance between nodes
       return nodes.some(node => node.position.distanceTo(pos) < minDistance);
     }
+    
+    // Enhanced lighting setup
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 5, 5);
+    scene.add(directionalLight);
+
+    const pointLight1 = new THREE.PointLight(0xffffff, 1, 100);
+    pointLight1.position.set(-5, 5, 5);
+    scene.add(pointLight1);
+
+    const pointLight2 = new THREE.PointLight(0xffffff, 1, 100);
+    pointLight2.position.set(5, -5, 5);
+    scene.add(pointLight2);
+    
+    // storage
+    const nodes = [];
+    const edges = [];
+    let drawing = false, start = null, previewLine = null;
+    
+    // geometries & materials
+    const nodeGeo = new THREE.SphereGeometry(0.25, 64, 64);
+    const nodeMat = new THREE.MeshPhongMaterial({ 
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.95,
+      shininess: 30,
+      specular: 0xffffff,
+      emissive: 0xffffff,
+      emissiveIntensity: 0.2
+    });
+    const edgeMat = new THREE.LineBasicMaterial({ 
+      color: 0xffffff, 
+      linewidth: 2,
+      transparent: true,
+      opacity: 0.7
+    });
+    const previewMat = new THREE.LineDashedMaterial({ 
+      color: 0xffffff, 
+      dashSize: 0.15, 
+      gapSize: 0.1, 
+      linewidth: 2,
+      transparent: true,
+      opacity: 0.5
+    });
+
+    // Add subtle animation to nodes
+    function animateNodes() {
+      nodes.forEach(node => {
+        node.rotation.x += 0.005;
+        node.rotation.y += 0.005;
+      });
+    }
+
+    // Update render loop to include node animation
+    (function animate(){
+      requestAnimationFrame(animate);
+      animateNodes();
+      renderer.render(scene, camera);
+    })();
     
     function resizeCanvas() {
       const dpr = window.devicePixelRatio || 1;
@@ -427,42 +495,9 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     
-    // Add lighting for glossy effect
-    const pointLight = new THREE.PointLight(0xffffff, 1.2, 100);
-    pointLight.position.set(0, 0, 20);
-    scene.add(pointLight);
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-    
     // raycaster + pointer
     const raycaster = new THREE.Raycaster();
     const pointer   = new THREE.Vector2();
-    
-    // storage
-    const nodes = [];
-    const edges = [];
-    let drawing = false, start = null, previewLine = null;
-    
-    // geometries & materials
-    const nodeGeo = new THREE.SphereGeometry(0.25, 64, 64);
-    const nodeMat = new THREE.MeshBasicMaterial({ 
-      color: 0xffffff,
-      transparent: true,
-      opacity: 0.9
-    });
-    const edgeMat = new THREE.LineBasicMaterial({ 
-      color: 0xffffff, 
-      linewidth: 2,
-      transparent: true,
-      opacity: 0.7
-    });
-    const previewMat = new THREE.LineDashedMaterial({ 
-      color: 0xffffff, 
-      dashSize: 0.15, 
-      gapSize: 0.1, 
-      linewidth: 2,
-      transparent: true,
-      opacity: 0.5
-    });
     
     // convert screen event → NDC
     function updatePointer(e){
@@ -507,6 +542,8 @@
         if (!getNode() && !isNearExistingNode(pos)) {
           const node = new THREE.Mesh(nodeGeo, nodeMat.clone());
           node.position.copy(pos);
+          node.castShadow = true;
+          node.receiveShadow = true;
           scene.add(node);
           nodes.push(node);
           console.log('Node created and added to scene. Total nodes:', nodes.length);
@@ -557,11 +594,6 @@
       scene.remove(hit);
       nodes.splice(nodes.indexOf(hit),1);
     });
-    // ——— RENDER LOOP ———
-    (function animate(){
-      requestAnimationFrame(animate);
-      renderer.render(scene,camera);
-    })();
     // Ensure hero section is below the fixed header
     function fitHeroBelowHeader() {
       const header = document.querySelector('header');
