@@ -395,7 +395,7 @@
     
     // Add this function to check for nearby nodes
     function isNearExistingNode(pos) {
-      const minDistance = 0.5; // Minimum distance between nodes
+      const minDistance = 0.8; // Reduced for more precise layer placement
       return nodes.some(node => node.position.distanceTo(pos) < minDistance);
     }
     
@@ -420,6 +420,84 @@
     const edges = [];
     let drawing = false, start = null, previewLine = null;
     
+    // Function to create structured neural network
+    function createRandomNetwork() {
+      const numLayers = 5;
+      const nodesPerLayer = [4, 5, 6, 5, 4]; // Number of nodes in each layer
+      const layerSpacing = 5; // Horizontal spacing between layers
+      const nodeSpacing = 2; // Vertical spacing between nodes
+      
+      // Calculate total width and starting x position
+      const totalWidth = (numLayers - 1) * layerSpacing;
+      const startX = -totalWidth / 2;
+      
+      // Create nodes in layers
+      for (let layer = 0; layer < numLayers; layer++) {
+        const x = startX + layer * layerSpacing;
+        const numNodes = nodesPerLayer[layer];
+        const totalHeight = (numNodes - 1) * nodeSpacing;
+        const startY = totalHeight / 2;
+        
+        for (let i = 0; i < numNodes; i++) {
+          const y = startY - i * nodeSpacing;
+          const node = new THREE.Mesh(nodeGeo, nodeMat.clone());
+          node.position.set(x, y, 0);
+          node.castShadow = true;
+          node.receiveShadow = true;
+          scene.add(node);
+          nodes.push(node);
+        }
+      }
+      
+      // Create connections
+      for (let layer = 0; layer < numLayers - 1; layer++) {
+        const currentLayerNodes = nodes.filter(n => 
+          Math.abs(n.position.x - (startX + layer * layerSpacing)) < 0.1
+        );
+        const nextLayerNodes = nodes.filter(n => 
+          Math.abs(n.position.x - (startX + (layer + 1) * layerSpacing)) < 0.1
+        );
+        
+        // Create main forward connections
+        currentLayerNodes.forEach(node1 => {
+          nextLayerNodes.forEach(node2 => {
+            // 70% chance to create a connection
+            if (Math.random() < 0.7) {
+              const geom = new THREE.BufferGeometry().setFromPoints([
+                node1.position,
+                node2.position
+              ]);
+              const line = new THREE.Line(geom, edgeMat.clone());
+              scene.add(line);
+              edges.push({ line, a: node1, b: node2 });
+            }
+          });
+        });
+        
+        // Add some cross-layer connections (skip one layer)
+        if (layer < numLayers - 2) {
+          const skipLayerNodes = nodes.filter(n => 
+            Math.abs(n.position.x - (startX + (layer + 2) * layerSpacing)) < 0.1
+          );
+          
+          currentLayerNodes.forEach(node1 => {
+            skipLayerNodes.forEach(node2 => {
+              // 20% chance to create a skip connection
+              if (Math.random() < 0.2) {
+                const geom = new THREE.BufferGeometry().setFromPoints([
+                  node1.position,
+                  node2.position
+                ]);
+                const line = new THREE.Line(geom, edgeMat.clone());
+                scene.add(line);
+                edges.push({ line, a: node1, b: node2 });
+              }
+            });
+          });
+        }
+      }
+    }
+
     // geometries & materials
     const nodeGeo = new THREE.SphereGeometry(0.25, 64, 64);
     const nodeMat = new THREE.MeshPhongMaterial({ 
@@ -445,6 +523,9 @@
       transparent: true,
       opacity: 0.5
     });
+
+    // Create initial network after materials are defined
+    createRandomNetwork();
 
     // Add subtle animation to nodes
     function animateNodes() {
