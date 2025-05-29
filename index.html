@@ -290,6 +290,16 @@
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.05); }
       }
+      .hidden-section {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.7s;
+      }
+      .fade-in-section {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        transition: opacity 0.7s;
+      }
     </style>
     <!-- three.js core -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
@@ -738,7 +748,7 @@
     </script>
 
     <!-- service section -->
-    <section class="max-w-7xl mx-auto px-5 my-6 text-white" id="Timeline">
+    <section class="max-w-7xl mx-auto px-5 my-6 text-white hidden-section" id="Timeline">
       <div class="text-center rotate-in">
         <h3 class="text-white text-3xl font-bold mb-8 glossy-blue-shadow">Work Experience</h3>
       </div>
@@ -778,7 +788,7 @@
     
 
     <!-- projects -->
-    <section class="px-5 my-32 mx-auto max-w-7xl" id="projects">
+    <section class="px-5 my-32 mx-auto max-w-7xl hidden-section" id="projects">
       <div class="text-center text-white glass-container p-8 rounded-lg scale-in">
         <h3 class="text-3xl font-bold mb-5">
           Recent <span class="text-primary">Projects</span>
@@ -871,7 +881,7 @@
       </div>
     </section>
 
-    <div id="resume" class="flex justify-center items-center my-10">
+    <div id="resume" class="flex justify-center items-center my-10 hidden-section">
       <a href="./src/ResumeSE.pdf" download="Saravanan_Resume.pdf">
         <button class="py-4 px-10 rounded-md bg-primary text-white font-bold">
           Download Resume
@@ -958,6 +968,18 @@
     }
     window.addEventListener('DOMContentLoaded', fitHeroBelowHeader);
     window.addEventListener('resize', fitHeroBelowHeader);
+    </script>
+    
+    <script>
+    // Reveal hidden sections on scroll
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 0) {
+        document.querySelectorAll('.hidden-section').forEach(el => {
+          el.classList.remove('hidden-section');
+          el.classList.add('fade-in-section');
+        });
+      }
+    });
     </script>
     
   </body>
