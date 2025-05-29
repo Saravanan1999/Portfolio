@@ -433,7 +433,7 @@
     // Function to create structured neural network
     function createRandomNetwork() {
       const numLayers = 6;
-      const nodesPerLayer = [4, 6, 7, 7, 6,5]; // Number of nodes in each layer
+      const nodesPerLayer = [4, 6, 7, 7, 6, 5]; // Number of nodes in each layer
       const layerSpacing = 5; // Horizontal spacing between layers
       const nodeSpacing = 2; // Vertical spacing between nodes
       
@@ -454,8 +454,13 @@
           node.position.set(x, y, 0);
           node.castShadow = true;
           node.receiveShadow = true;
-          scene.add(node);
+          // Store original position and assign random phase/amplitude for floating
+          node.userData.originalPosition = { x, y, z: 0 };
+          node.userData.floatPhase = Math.random() * Math.PI * 2;
+          node.userData.floatAmpX = 0.15 + Math.random() * 0.12;
+          node.userData.floatAmpY = 0.15 + Math.random() * 0.12;
           nodes.push(node);
+          scene.add(node);
         }
       }
       
@@ -541,7 +546,7 @@
     globalThis._pulsePhases = globalThis._pulsePhases || { nodes: new WeakMap(), edges: new WeakMap() };
 
     function animateNodes() {
-      const t = performance.now() * 0.002;
+      const t = performance.now() * 0.001;
       nodes.forEach(node => {
         node.rotation.x += 0.005;
         node.rotation.y += 0.005;
@@ -551,9 +556,19 @@
           phase = Math.random() * Math.PI * 2;
           globalThis._pulsePhases.nodes.set(node, phase);
         }
-        const intensity = 0.18 + 0.12 * Math.abs(Math.sin(t + phase));
+        const intensity = 0.18 + 0.12 * Math.abs(Math.sin(t * 2 + phase));
         if (node.material.emissiveIntensity !== undefined) {
           node.material.emissiveIntensity = intensity;
+        }
+        // Floating/swaying effect
+        if (node.userData.originalPosition) {
+          const { x, y, z } = node.userData.originalPosition;
+          const floatPhase = node.userData.floatPhase;
+          const ampX = node.userData.floatAmpX;
+          const ampY = node.userData.floatAmpY;
+          node.position.x = x + Math.sin(t + floatPhase) * ampX;
+          node.position.y = y + Math.cos(t * 0.8 + floatPhase) * ampY;
+          // (z remains unchanged)
         }
       });
       edges.forEach(edge => {
@@ -562,10 +577,18 @@
           phase = Math.random() * Math.PI * 2;
           globalThis._pulsePhases.edges.set(edge, phase);
         }
-        const opacity = 0.5 + 0.2 * Math.abs(Math.sin(t + phase));
+        const opacity = 0.5 + 0.2 * Math.abs(Math.sin(t * 2 + phase));
         if (edge.line.material.opacity !== undefined) {
           edge.line.material.opacity = opacity;
           edge.line.material.needsUpdate = true;
+        }
+        // Update edge geometry to follow floating nodes
+        if (edge.a && edge.b && edge.line.geometry) {
+          edge.line.geometry.setFromPoints([
+            edge.a.position,
+            edge.b.position
+          ]);
+          edge.line.geometry.attributes.position.needsUpdate = true;
         }
       });
     }
@@ -660,6 +683,14 @@
           node.position.copy(pos);
           node.castShadow = true;
           node.receiveShadow = true;
+          // Assign floating and pulsing properties
+          node.userData.originalPosition = { x: pos.x, y: pos.y, z: pos.z };
+          node.userData.floatPhase = Math.random() * Math.PI * 2;
+          node.userData.floatAmpX = 0.15 + Math.random() * 0.12;
+          node.userData.floatAmpY = 0.15 + Math.random() * 0.12;
+          if (globalThis._pulsePhases && globalThis._pulsePhases.nodes) {
+            globalThis._pulsePhases.nodes.set(node, Math.random() * Math.PI * 2);
+          }
           scene.add(node);
           nodes.push(node);
           console.log('Node created and added to scene. Total nodes:', nodes.length);
@@ -686,7 +717,12 @@
         const geom = new THREE.BufferGeometry().setFromPoints([ start.position, hit.position ]);
         const line = new THREE.Line(geom, edgeMat.clone());
         scene.add(line);
-        edges.push({ line, a:start, b:hit });
+        const edgeObj = { line, a:start, b:hit };
+        edges.push(edgeObj);
+        // Assign pulsing phase for new edge
+        if (globalThis._pulsePhases && globalThis._pulsePhases.edges) {
+          globalThis._pulsePhases.edges.set(edgeObj, Math.random() * Math.PI * 2);
+        }
       }
       // cleanup preview
       scene.remove(previewLine);
