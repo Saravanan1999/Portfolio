@@ -300,6 +300,34 @@
         pointer-events: auto !important;
         transition: opacity 0.7s;
       }
+      /* Add typing cursor animation */
+      .typing-cursor {
+        display: inline-block;
+        width: 2px;
+        height: 1em;
+        background-color: #5dadec;
+        margin-left: 2px;
+        animation: blink 1s step-end infinite;
+        vertical-align: middle;
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      .typing-text {
+        display: inline-block;
+        position: relative;
+      }
+
+      .typing-text::after {
+        content: '|';
+        position: absolute;
+        right: -2px;
+        color: #5dadec;
+        animation: blink 1s step-end infinite;
+      }
     </style>
     <!-- three.js core -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
@@ -368,12 +396,12 @@
       <canvas id="heroCanvas"></canvas>
       <div class="hero-content">
         <h1 class="text-10xl sm:text-10xl font-bold" style="font-size:32px;color:white">
-          Saravanan Hari Baskaran
+          <span id="name-typing"></span>
         </h1>
         <div id="subtitle" class="mt-4 text-2xl persuasive-text"></div>
         <div class="mt-8 flicker-content">
           <p class="text-white max-w-2xl text-center">
-            Bridging AI innovation with software engineering excellence
+            <span id="description-typing"></span>
           </p>
         </div>
       </div>
@@ -1018,5 +1046,34 @@
     });
     </script>
     
+    <script>
+      // Initialize typing animations
+      document.addEventListener('DOMContentLoaded', function() {
+        // Name typing
+        new Typed('#name-typing', {
+          strings: ['Saravanan Hari Baskaran'],
+          typeSpeed: 50,
+          showCursor: true,
+          cursorChar: '|',
+          autoInsertCss: true,
+          onComplete: function(self) {
+            self.cursor.remove();
+          }
+        });
+
+        // Description typing
+        new Typed('#description-typing', {
+          strings: ['Turning insights into action with a touch of tech magic...'],
+          typeSpeed: 30,
+          startDelay: 2000,
+          showCursor: true,
+          cursorChar: '|',
+          autoInsertCss: true,
+          onComplete: function(self) {
+            self.cursor.remove();
+          }
+        });
+      });
+    </script>
   </body>
 </html>
