@@ -527,11 +527,36 @@
     // Create initial network after materials are defined
     createRandomNetwork();
 
-    // Add subtle animation to nodes
+    // Assign a random phase to each node and edge for organic pulsing
+    globalThis._pulsePhases = globalThis._pulsePhases || { nodes: new WeakMap(), edges: new WeakMap() };
+
     function animateNodes() {
+      const t = performance.now() * 0.002;
       nodes.forEach(node => {
         node.rotation.x += 0.005;
         node.rotation.y += 0.005;
+        // Pulsing glow
+        let phase = globalThis._pulsePhases.nodes.get(node);
+        if (phase === undefined) {
+          phase = Math.random() * Math.PI * 2;
+          globalThis._pulsePhases.nodes.set(node, phase);
+        }
+        const intensity = 0.18 + 0.12 * Math.abs(Math.sin(t + phase));
+        if (node.material.emissiveIntensity !== undefined) {
+          node.material.emissiveIntensity = intensity;
+        }
+      });
+      edges.forEach(edge => {
+        let phase = globalThis._pulsePhases.edges.get(edge);
+        if (phase === undefined) {
+          phase = Math.random() * Math.PI * 2;
+          globalThis._pulsePhases.edges.set(edge, phase);
+        }
+        const opacity = 0.5 + 0.2 * Math.abs(Math.sin(t + phase));
+        if (edge.line.material.opacity !== undefined) {
+          edge.line.material.opacity = opacity;
+          edge.line.material.needsUpdate = true;
+        }
       });
     }
 
