@@ -422,8 +422,8 @@
     
     // Function to create structured neural network
     function createRandomNetwork() {
-      const numLayers = 5;
-      const nodesPerLayer = [4, 5, 6, 5, 4]; // Number of nodes in each layer
+      const numLayers = 6;
+      const nodesPerLayer = [4, 6, 7, 7, 6,5]; // Number of nodes in each layer
       const layerSpacing = 5; // Horizontal spacing between layers
       const nodeSpacing = 2; // Vertical spacing between nodes
       
@@ -674,6 +674,30 @@
       // remove node
       scene.remove(hit);
       nodes.splice(nodes.indexOf(hit),1);
+    });
+    // Add hover effect to nodes
+    canvas.addEventListener('pointermove', e => {
+      updatePointer(e);
+      const hit = getNode();
+      nodes.forEach(node => {
+        const mat = node.material;
+        if (node === hit) {
+          mat.color.set('#5dadec'); // blue
+        } else {
+          mat.color.set('#ffffff'); // white
+        }
+      });
+      edges.forEach(edge => {
+        if (edge.a === hit || edge.b === hit) {
+          edge.line.material.color.set('#5dadec'); // blue
+        } else {
+          edge.line.material.color.set('#ffffff'); // white
+        }
+      });
+    });
+    canvas.addEventListener('pointerout', () => {
+      nodes.forEach(node => node.material.color.set('#ffffff'));
+      edges.forEach(edge => edge.line.material.color.set('#ffffff'));
     });
     // Ensure hero section is below the fixed header
     function fitHeroBelowHeader() {
