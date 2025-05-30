@@ -1218,8 +1218,57 @@
       })();
       </script>
     </section>
-    
-    
+
+    <!-- Education section -->
+    <section class="max-w-7xl mx-auto px-5 my-6 text-white hidden-section" id="Education">
+      <div class="text-center rotate-in">
+        <h3 class="text-3xl font-bold mb-5">
+          <span id="education-typing"></span>
+        </h3>
+      </div>
+      <div style="position: relative; min-height: 600px;">
+        <ul class="list-component" style="position:relative; z-index:1;">
+          <li class="__item __item-center">
+            <div class="card-component glass-container border border-primary rounded-2xl p-5 shadow-xl">
+              <h2 class="__year">2018 - 2022</h2>
+              <h1 class="__title">Vellore Institute of Technology (VIT University)</h1>
+              <p class="__text mb-4">Vellore, Tamil Nadu, India</p>
+              <ul>
+                <li class="mb-4">Bachelor of Technology in Computer Science and Engineering</li>
+                <li class="mb-4">CGPA: 4.0/4.0</li>
+              </ul>
+              <div class="mt-6">
+                <h3 class="text-lg font-semibold text-primary mb-4">Relevant Coursework</h3>
+                <p class="text-white text-sm leading-relaxed">
+                  Neural Networks, Natural Language Processing, Image Processing, Object Oriented Programming, Java Programming, Operating Systems, Data Structures and Algorithms, Database Management Systems, Computer Networks, Computer Architecture, Software Engineering, Software Testing and Verification, Cyber Security, Blockchain and Cryptography, Information Security
+                </p>
+              </div>
+            </div>
+          </li>
+          <div class="timeline-arrow-auto">
+            <svg viewBox="0 0 80 80" width="64" height="64">
+              <polygon points="20,20 40,60 60,20" fill="#5dadec" opacity="0.85"/>
+            </svg>
+          </div>
+          <li class="__item __item-center">
+            <div class="card-component glass-container border border-primary rounded-2xl p-5 shadow-xl">
+              <h2 class="__year">2024 - Present</h2>
+              <h1 class="__title">Columbia University</h1>
+              <p class="__text mb-4">New York, NY, USA</p>
+              <ul>
+                <li class="mb-4">Master of Science in Data Science</li>
+                <li class="mb-4">CGPA: 3.7/4.0</li>
+              </ul>
+              <h3 class="text-lg font-semibold text-primary mb-4">Relevant Coursework</h3>
+                <p class="text-white text-sm leading-relaxed">
+                  Machine Learning, Deep Learning, Probability and Statistics, Statistical Inference, Algorithms, Data Visualization and Analysis, Computer Systems
+                </p>
+            </div>
+          </li>
+          
+        </ul>
+      </div>
+    </section>
 
     <!-- projects -->
     <section class="px-5 my-32 mx-auto max-w-7xl hidden-section" id="projects">
@@ -1611,6 +1660,14 @@
         const workHeading = document.getElementById('work-typing');
         const timelineSection = document.getElementById('Timeline');
         let workObserver = null;
+
+        // Education section typing
+        let educationTypingStarted = false;
+        let educationObserverActivated = false;
+        const educationHeading = document.getElementById('education-typing');
+        const educationSection = document.getElementById('Education');
+        let educationObserver = null;
+
         function activateWorkObserver() {
           if (observerActivated || !workHeading || !timelineSection) return;
           observerActivated = true;
@@ -1634,8 +1691,34 @@
           }, { threshold: 0.2 });
           workObserver.observe(workHeading);
         }
+
+        function activateEducationObserver() {
+          if (educationObserverActivated || !educationHeading || !educationSection) return;
+          educationObserverActivated = true;
+          educationObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting && !educationTypingStarted) {
+                educationTypingStarted = true;
+                new Typed('#education-typing', {
+                  strings: ['Education'],
+                  typeSpeed: 40,
+                  showCursor: true,
+                  cursorChar: '|',
+                  autoInsertCss: true,
+                  onComplete: function(self) {
+                    self.cursor.remove();
+                  }
+                });
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.2 });
+          educationObserver.observe(educationHeading);
+        }
+
         window.addEventListener('scroll', function onFirstScroll() {
           activateWorkObserver();
+          activateEducationObserver();
           window.removeEventListener('scroll', onFirstScroll);
         });
       });
