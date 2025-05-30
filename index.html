@@ -381,40 +381,6 @@
         animation: lineGlow 2s ease-in-out;
       }
 
-      @keyframes arrowGlow {
-        0% {
-          opacity: 0.5;
-          filter: drop-shadow(0 0 6px #5dadec);
-        }
-        50% {
-          opacity: 1;
-          filter: drop-shadow(0 0 10px #5dadec)
-                  drop-shadow(0 0 16px #5dadec)
-                  drop-shadow(0 0 22px #5dadec);
-        }
-        100% {
-          opacity: 0.5;
-          filter: drop-shadow(0 0 6px #5dadec);
-        }
-      }
-
-      @keyframes lineGlow {
-        0% {
-          opacity: 0.5;
-          box-shadow: 0 0 6px #5dadec;
-        }
-        50% {
-          opacity: 1;
-          box-shadow: 0 0 10px #5dadec,
-                      0 0 16px #5dadec,
-                      0 0 22px #5dadec;
-        }
-        100% {
-          opacity: 0.5;
-          box-shadow: 0 0 6px #5dadec;
-        }
-      }
-
       .timeline-arrow-auto::before {
         margin-bottom: 4px;
       }
@@ -1039,10 +1005,10 @@
             <div class="card-component glass-container border border-primary rounded-2xl p-5 shadow-xl">
               <h2 class="__year">Apr 2020 - May 2020</h2>
               <h1 class="__title">Data Science Intern, Verzeo EduTech</h1>
-              <p class="__text">Remote</p>
+              <p class="__text mb-4">Remote</p>
               <ul>
-                <li>Built a high-accuracy student performance prediction pipeline by honing Random Forest, XGBoost, and LightGBM models with k-fold cross-validation and hyperparameter tuning, achieving R² = 0.93 for forecasting outcomes such as course completion and engagement levels.</li>
-                <li>Streamlined adaptive data preprocessing with IQR-based outlier removal, dynamic encoding, and missing value imputation to handle noisy LMS and enrollment data; led data quality initiatives using NumPy, SciPy, and Pandas to enforce statistical validation, bolstering model reliability across diverse student segments.</li>
+                <li class="mb-4">Built a high-accuracy student performance prediction pipeline by honing Random Forest, XGBoost, and LightGBM models with k-fold cross-validation and hyperparameter tuning, achieving R² = 0.93 for forecasting outcomes such as course completion and engagement levels.</li>
+                <li class="mb-4">Streamlined adaptive data preprocessing with IQR-based outlier removal, dynamic encoding, and missing value imputation to handle noisy LMS and enrollment data; led data quality initiatives using NumPy, SciPy, and Pandas to enforce statistical validation, bolstering model reliability across diverse student segments.</li>
               </ul>
             </div>
           </li>
@@ -1050,11 +1016,16 @@
             <div class="card-component glass-container border border-primary rounded-2xl p-5 shadow-xl">
               <h2 class="__year">Jan 2022 - May 2024</h2>
               <h1 class="__title">Data Scientist, MakeMyTrip India Private Limited</h1>
-              <p class="__text">Bengaluru, Karnataka, India</p>
+              <p class="__text mb-4">Bengaluru, Karnataka, India</p>
               <ul>
-                <li>Benchmarked sentiment models including BERT, TF-IDF with Logistic Regression, and RoBERTa, and worked collaboratively to finalize DistilBERT for its performance–efficiency balance while helping develop an internal NLP engine revealing complaint themes and sentiment trends in hotel reviews.</li>
-                <li>Took initiative to redesign tax document OCR pipeline combining advanced image pre-processing (adaptive thresholding, skew correction) with a fine-tuned CRNN model and LSTM-enhanced Tesseract, increasing invoice data extraction accuracy from 57% to 83.33% across highly unstructured document formats.</li>
-                <li>Drove development of end-to-end deep learning–powered photo moderation pipeline to flag low-quality, policy-violating, or misleading hotel listing images by integrating ResNet50 for content quality classification, OCR for text overlay detection, perceptual hashing for duplicate identification, and rule-based filters for category mismatches lessening manual review effort by ~40% and improving listing integrity.</li>
+                <li class="mb-4">Built a High-Performance Sentiment Analysis Engine
+                Benchmarked and evaluated cutting-edge models including BERT, RoBERTa, and TF-IDF with Logistic Regression, ultimately selecting DistilBERT for its optimal balance of speed and precision. Played a key role in developing a robust in-house NLP engine that extracted dominant complaint themes and sentiment dynamics from massive volumes of hotel reviews, transforming unstructured feedback into actionable business intelligence.</li>
+                
+                <li class="mb-4">Engineered a State-of-the-Art OCR Pipeline for Tax Documents
+                Redesigned a failing document pipeline from scratch to handle complex, unstructured invoices with high variability. Integrated adaptive thresholding, skew correction, a fine-tuned CRNN model, and an LSTM-enhanced Tesseract setup to create a hybrid OCR system—boosting data extraction accuracy from 57% to a remarkable 83.33%. Delivered scalable performance across diverse document formats.</li>
+                
+                <li class="mb-4">Developed an End-to-End Deep Learning Moderation System
+                Architected a comprehensive image moderation pipeline leveraging ResNet50 for visual quality analysis, OCR for text overlay detection, perceptual hashing for duplicate flagging, and rule-based filters to catch category mismatches. Achieved a ~40% reduction in manual review workload and significantly improved the integrity and compliance of hotel listings at scale.</li>
               </ul>
             </div>
           </li>
@@ -1062,10 +1033,10 @@
             <div class="card-component glass-container border border-primary rounded-2xl p-5 shadow-xl">
               <h2 class="__year">May 2025 - Present</h2>
               <h1 class="__title">Machine Learning Engineer Intern, Arklex.AI</h1>
-              <p class="__text">New York, New York, US</p>
+              <p class="__text mb-4">New York, New York, US</p>
               <ul>
-                <li>Took the lead in architecting a modular LLM-powered agentic framework with Retrieval-Augmented Generation (RAG) support, enabling context-grounded response generation using enterprise-specific data sources.</li>
-                <li>Led development of real-time configurable agent personas, including dynamic tone modulation, sentence complexity, and behavioral rules, allowing deployment of adaptive, brand-aligned AI agents tailored to user context and intent.</li>
+                <li class="mb-4">Took the lead in architecting a modular LLM-powered agentic framework with Retrieval-Augmented Generation (RAG) support, enabling context-grounded response generation using enterprise-specific data sources.</li>
+                <li class="mb-4">Led development of real-time configurable agent personas, including dynamic tone modulation, sentence complexity, and behavioral rules, allowing deployment of adaptive, brand-aligned AI agents tailored to user context and intent.</li>
               </ul>
             </div>
           </li>
@@ -1254,7 +1225,7 @@
     <section class="px-5 my-32 mx-auto max-w-7xl hidden-section" id="projects">
       <div class="text-center text-white glass-container p-8 rounded-lg scale-in">
         <h3 class="text-3xl font-bold mb-5">
-          Recent <span class="text-primary">Projects</span>
+           <span class="text-primary">Projects</span>
         </h3>
         <p class="mb-6 md:w-3/4 mx-auto">
           Merging technical expertise with creativity, I have delivered
@@ -1267,38 +1238,34 @@
       >
         <!-- Project 1 -->
         <div
-          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-left"
-        >
-          <img
-            src="src/img/scalable-data-platform.svg"
-            alt="Scalable Data Platform"
-            class="p-5 w-full h-[300px]"
-          />
-          <h4 class="text-xl font-bold text-primary mb-2">
-            Scalable Data Platform on AWS
-          </h4>
-          <p class="text-white text-sm">
-            Built a data pipeline with Apache Spark on AWS, processing 10M+
-            records with 70% faster analytics, and integrated ML models with
-            93.8% accuracy for real-time predictions.
-          </p>
-        </div>
-        <!-- Project 2 -->
-        <div
-          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-right"
+          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-left flex flex-col items-center"
         >
           <img
             src="src/img/pustak.svg"
             alt="Pustak Project"
-            class="p-5 w-full h-[300px]"
+            class="p-5 w-auto h-[300px] object-contain"
           />
           <h4 class="text-xl font-bold text-primary mb-2">
             Pustak – Book Management Platform
           </h4>
           <p class="text-white text-sm">
-            Developed a Django-powered app for book exchange, integrating
-            BeautifulSoup for web scraping and deploying on Heroku with robust
-            user authentication and APIs.
+            Developed and deployed a Django-powered web application for managing and exchanging books, quotes, and user interactions. Built a responsive Angular frontend with book catalogs, quote displays, and user profiles, using two-way data binding, custom directives, RxJS for async data handling, and NgRx for state management. Implemented robust features including user authentication, admin dashboards, and system configurations, supported by AWS and Firebase for storage and backend operations. Utilized BeautifulSoup for web scraping to deliver daily quotes and book updates, and Swagger for API documentation and testing.
+          </p>
+        </div>
+        <!-- Project 2 -->
+        <div
+          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-right flex flex-col items-center"
+        >
+          <img
+            src="src/img/spicyden.svg"
+            alt="SpicyDen"
+            class="p-5 w-auto h-[300px] object-contain"
+          />
+          <h4 class="text-xl font-bold text-primary mb-2">
+            SpicyDen – Restaurant App
+          </h4>
+          <p class="text-white text-sm">
+            Developed SpicyDen, a restaurant application using AngularJS, utilizing Angular's code scaffolding for efficient component generation and seamless service management. Implemented testing workflows with Karma to ensure code reliability and maintainability throughout the development process.
           </p>
         </div>
       </div>
@@ -1307,45 +1274,210 @@
       >
         <!-- Project 3 -->
         <div
-          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-left"
+          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-left flex flex-col items-center"
         >
           <img
-            src="src/img/hotel-management.svg"
-            alt="Hotel Management"
-            class="p-5 w-full h-[300px]"
+            src="src/img/cyberbullying.png"
+            alt="Cyberbullying Detection"
+            class="p-5 w-auto h-[300px] object-contain"
           />
           <h4 class="text-xl font-bold text-primary mb-2">
-            Hotel Management System – MakeMyTrip
+            Cyberbullying Detection via Multi-Stage NLP Pipeline
           </h4>
           <p class="text-white text-sm">
-            Spearheaded fraud prevention and compliance features, while
-            designing a GSTN validation system with Kafka and Redis, reducing
-            workload by 4 person-days daily.
+            Designed a multi-model NLP pipeline for robust cyberbullying detection, combining a hate speech classifier (HateBERT) with a BERT model fine-tuned on cyberbullying data, achieving 95% recall through weighted ensemble voting and enriched contextual understanding of abusive language.
           </p>
         </div>
         <!-- Project 4 -->
         <div
-          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-right"
+          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-right flex flex-col items-center"
         >
           <img
-            src="src/img/spicyden.svg"
-            alt="SpicyDen"
-            class="p-5 w-full h-[300px]"
+            src="src/img/pneumothorax.svg"
+            alt="Pneumothorax Detection"
+            class="p-5 w-auto h-[300px] object-contain"
           />
           <h4 class="text-xl font-bold text-primary mb-2">
-            SpicyDen – Restaurant App
+            Optimized Deep Learning Pipeline for Pneumothorax Detection
           </h4>
           <p class="text-white text-sm">
-            Built a restaurant application using AngularJS with scalable
-            components, implementing testing workflows to ensure high-quality
-            code and seamless service management.
+            Engineered an automated image preprocessing pipeline for 12,000+ chest X-ray images, leveraging PyTorch, PIL, and torchvision to standardize dimensions, normalize pixel intensities, and apply CLAHE-based contrast enhancement, ensuring high-quality inputs for deep learning models.
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex flex-col md:flex-row items-center justify-between gap-8 my-20"
+      >
+        <!-- Project 5 -->
+        <div
+          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-left flex flex-col items-center"
+        >
+          <img
+            src="src/img/nyc-taxi.svg"
+            alt="NYC Taxi Data Pipeline"
+            class="p-5 w-auto h-[300px] object-contain"
+          />
+          <h4 class="text-xl font-bold text-primary mb-2">
+            NYC Taxi Data Pipeline: Scalable ML & Real-Time Insights
+          </h4>
+          <p class="text-white text-sm">
+            Spearheaded development of a distributed data processing pipeline using Apache Spark on AWS EMR, accelerating processing of 10M+ NYC Taxi Trip Records by 70%. Developed and deployed scalable ML-integrated APIs using FastAPI, Docker, and AWS EKS, achieving 93.8% model accuracy and 60% faster response times. Automated ML deployment workflows with GitHub Actions and AWS Lambda, reducing deployment cycles by 50%. Enhanced system observability through Grafana dashboards and implemented secure OAuth2-based authentication protocols.
+          </p>
+        </div>
+        <!-- Project 6 -->
+        <div
+          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-right flex flex-col items-center"
+        >
+          <img
+            src="src/img/stockprice.svg"
+            alt="Stock Performance Analysis"
+            class="p-5 w-auto h-[300px] object-contain"
+          />
+          <h4 class="text-xl font-bold text-primary mb-2">
+            Sector-Wise Stock Performance Analysis Using Advanced Visualization
+          </h4>
+          <p class="text-white text-sm">
+            Conducted in-depth analysis of stock performance across Technology, Finance, and Healthcare sectors using R for statistical computation and D3.js for dynamic, interactive visualizations. Designed a responsive dashboard with HTML and CSS, highlighting key insights such as volatility trends, seasonal patterns, and market sentiment impacts.
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex flex-col md:flex-row items-center justify-between gap-8 my-20"
+      >
+        <!-- Project 7 -->
+        <div
+          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-left flex flex-col items-center"
+        >
+          <img
+            src="src/img/music.svg"
+            alt="Spotify Track Popularity"
+            class="p-5 w-auto h-[300px] object-contain"
+          />
+          <h4 class="text-xl font-bold text-primary mb-2">
+            Predicting Spotify Track Popularity
+          </h4>
+          <p class="text-white text-sm">
+            Analyzed 30K songs using Python to uncover significant audio features and their correlations, providing insights into factors influencing track popularity in the streaming era. Engineered and benchmarked ML pipelines with Ridge, Elastic Net, CatBoost, and LightGBM, complemented by deep learning architectures.
+          </p>
+        </div>
+        <!-- Project 8 -->
+        <div
+          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-right flex flex-col items-center"
+        >
+          <img
+            src="src/img/task.svg"
+            alt="Taskify"
+            class="p-5 w-auto h-[300px] object-contain"
+          />
+          <h4 class="text-xl font-bold text-primary mb-2">
+            Taskify: A Task Management System
+          </h4>
+          <p class="text-white text-sm">
+            Developed a task management application using Spring Boot for building the backend, with features such as user authentication, task creation, and status tracking. Utilized Spring Security for secure user login and JWT (JSON Web Tokens) for stateless authentication. Implemented unit and integration tests using JUnit and Mockito, ensuring reliability and functionality of key features. Configured Spring Boot Test for end-to-end testing of the RESTful API, improving test coverage and minimizing bugs. Utilized PostgreSQL with Spring Data JPA for efficient querying and handling of complex data relationships.
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex flex-col md:flex-row items-center justify-between gap-8 my-20"
+      >
+        <!-- Project 9 -->
+        <div
+          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-left flex flex-col items-center"
+        >
+          <img
+            src="src/img/carcrash.png"
+            alt="NYC Borough Classification"
+            class="p-5 w-auto h-[300px] object-contain"
+          />
+          <h4 class="text-xl font-bold text-primary mb-2">
+            Borough Classification in NYC Using Vehicle Collision Data
+          </h4>
+          <p class="text-white text-sm">
+            Built a borough classification model using 2M+ NYC vehicle collision records, achieving 98.2% accuracy and 96% F1-score — without using explicit geographic features (lat/long). Engineered predictive features from metadata including timestamp, vehicle type, accident factors, and severity codes. Benchmarked multiple models (XGBoost, Random Forest, Logistic Regression) to optimize predictive performance. Identified borough-specific traffic risk patterns, revealing distinct trends in accident severity, peak crash times, and human vs environmental causes. Validated results using stratified K-fold cross-validation and hyperparameter tuning; visualized findings with Matplotlib and Seaborn.
+          </p>
+        </div>
+        <!-- Project 10 -->
+        <div
+          class="border border-primary shadow-xl shadow-[#5dadec3b] w-full md:w-[48%] rounded-2xl p-5 project-card slide-in-right flex flex-col items-center"
+        >
+          <img
+            src="src/img/weather.svg"
+            alt="Time Series Forecasting"
+            class="p-5 w-auto h-[300px] object-contain"
+          />
+          <h4 class="text-xl font-bold text-primary mb-2">
+            Weather Forecasting with GRU
+          </h4>
+          <p class="text-white text-sm">
+            Built a real-time weather data scraper to collect hourly forecasts from multiple sources, storing structured time-series weather data for predictive modeling. Trained a Gated Recurrent Unit (GRU)-based neural network for 24-hour weather forecasting, achieving 94% accuracy using historical Delhi weather data (1997–2016). Preprocessed data for deep learning models, normalizing inputs between -1 to 1 and using RMSprop optimizer to enhance learning stability across training epochs.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research Publications -->
+    <section class="px-5 my-32 mx-auto max-w-7xl hidden-section" id="publications">
+      <div class="text-center text-white glass-container p-8 rounded-lg scale-in">
+        <h3 class="text-3xl font-bold mb-5">
+          <span class="text-primary">Research Publications</span>
+        </h3>
+        <p class="mb-6 md:w-3/4 mx-auto">
+          Contributing to the advancement of knowledge through rigorous research and academic publications.
+        </p>
+      </div>
+      <div class="flex flex-col gap-8 my-20">
+        <!-- Publication 1 -->
+        <div class="border border-primary shadow-xl shadow-[#5dadec3b] w-full rounded-2xl p-5 project-card slide-in-left flex flex-col items-center">
+          <img
+            src="src/img/plantdisease.png"
+            alt="Plant Disease Detection"
+            class="p-5 w-auto h-[300px] object-contain"
+          />
+          <h4 class="text-xl font-bold text-primary mb-2">
+            Plant Disease Detection Using CNN and Transfer Learning
+          </h4>
+          <p class="text-white text-sm mb-2">
+            <span class="italic">Journal:</span> International Journal of Advanced Research in Engineering and Science Management (IJARESM)
+          </p>
+          <p class="text-white text-sm mb-2">
+            <span class="italic">Volume:</span> 11, Issue 12
+          </p>
+          <p class="text-white text-sm mb-2">
+            <span class="italic">Year:</span> December 2023
+          </p>
+          <p class="text-white text-sm">
+            Developed a mobile-based plant disease recognition system using Convolutional Neural Networks (CNNs) with Transfer Learning (InceptionV3) to detect and classify leaf diseases with 96.1% accuracy. Leveraged TensorFlow and Keras for model development, achieving robust performance through advanced data augmentation, multi-phase training, and real-time image classification. Deployed the model via a Flutter mobile application, enabling farmers to instantly capture and diagnose leaf diseases, reducing diagnosis time from days to seconds. This solution empowers early intervention and supports agricultural resilience through AI-driven decision support.
+          </p>
+        </div>
+
+        <!-- Publication 2 -->
+        <div class="border border-primary shadow-xl shadow-[#5dadec3b] w-full rounded-2xl p-5 project-card slide-in-right flex flex-col items-center">
+          <img
+            src="src/img/stock.svg"
+            alt="Stock Market Prediction"
+            class="p-5 w-auto h-[300px] object-contain"
+          />
+          <h4 class="text-xl font-bold text-primary mb-2">
+            A Study on the Impact of Sentiment Analysis on Stock Market Prediction
+          </h4>
+          <p class="text-white text-sm mb-2">
+            <span class="italic">Journal:</span> Recent Advances in Computer Science and Communications
+          </p>
+          <p class="text-white text-sm mb-2">
+            <span class="italic">Volume:</span> 16, Issue 1, 2023
+          </p>
+          <p class="text-white text-sm mb-2">
+            <span class="italic">Published:</span> May 25, 2022
+          </p>
+          <p class="text-white text-sm">
+            Conducted a comparative study on sentiment analysis techniques for stock market prediction, evaluating machine learning models such as SVM, Random Forest, and deep learning-based LSTM. Analyzed the impact of sentiment from social media (Twitter) and financial news on stock price fluctuations, identifying correlations using Pearson coefficients and sector-wise volatility comparisons. Benchmarked multiple sentiment analysis methodologies (LDA-POS, SVM, and neural networks), demonstrating an accuracy improvement of up to 70% in predicting stock market movements during major events.
           </p>
         </div>
       </div>
     </section>
 
     <div id="resume" class="flex justify-center items-center my-10 hidden-section">
-      <a href="./src/ResumeSE.pdf" download="Saravanan_Resume.pdf">
+      <a href="./src/SaravananResumeDSMay2025.pdf" download="Saravanan_Resume.pdf">
         <button class="py-4 px-10 rounded-md bg-primary text-white font-bold">
           Download Resume
         </button>
