@@ -353,6 +353,12 @@
         width: 64px;
         height: 64px;
       }
+      .timeline-arrow-auto svg polygon {
+        filter: drop-shadow(0 0 6px #5dadec);
+        opacity: 0.5;
+        animation: none;
+      }
+
       .timeline-arrow-auto::before,
       .timeline-arrow-auto::after {
         content: '';
@@ -361,7 +367,54 @@
         height: 24px;
         background: #5dadec;
         margin: 0 auto;
+        opacity: 0.5;
+        box-shadow: 0 0 6px #5dadec;
+        animation: none;
       }
+
+      .timeline-arrow-auto.animate svg polygon {
+        animation: arrowGlow 2s ease-in-out;
+      }
+
+      .timeline-arrow-auto.animate::before,
+      .timeline-arrow-auto.animate::after {
+        animation: lineGlow 2s ease-in-out;
+      }
+
+      @keyframes arrowGlow {
+        0% {
+          opacity: 0.5;
+          filter: drop-shadow(0 0 6px #5dadec);
+        }
+        50% {
+          opacity: 1;
+          filter: drop-shadow(0 0 10px #5dadec)
+                  drop-shadow(0 0 16px #5dadec)
+                  drop-shadow(0 0 22px #5dadec);
+        }
+        100% {
+          opacity: 0.5;
+          filter: drop-shadow(0 0 6px #5dadec);
+        }
+      }
+
+      @keyframes lineGlow {
+        0% {
+          opacity: 0.5;
+          box-shadow: 0 0 6px #5dadec;
+        }
+        50% {
+          opacity: 1;
+          box-shadow: 0 0 10px #5dadec,
+                      0 0 16px #5dadec,
+                      0 0 22px #5dadec;
+        }
+        100% {
+          opacity: 0.5;
+          box-shadow: 0 0 6px #5dadec;
+        }
+      }
+
       .timeline-arrow-auto::before {
         margin-bottom: 4px;
       }
@@ -390,6 +443,13 @@
       }
       .card-component:hover {
         transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+      }
+      .timeline-arrow-auto.animate::before,
+      .timeline-arrow-auto.animate::after {
+        animation-play-state: running;
+      }
+      .timeline-arrow-auto.animate svg polygon {
+        animation-play-state: running;
       }
     </style>
     <!-- three.js core -->
@@ -1046,6 +1106,12 @@
           width: 64px;
           height: 64px;
         }
+        .timeline-arrow-auto svg polygon {
+          filter: drop-shadow(0 0 6px #5dadec);
+          opacity: 0.5;
+          animation: none;
+        }
+
         .timeline-arrow-auto::before,
         .timeline-arrow-auto::after {
           content: '';
@@ -1054,7 +1120,54 @@
           height: 24px;
           background: #5dadec;
           margin: 0 auto;
+          opacity: 0.5;
+          box-shadow: 0 0 6px #5dadec;
+          animation: none;
         }
+
+        @keyframes arrowGlow {
+          0% {
+            opacity: 0.5;
+            filter: drop-shadow(0 0 6px #5dadec);
+          }
+          50% {
+            opacity: 1;
+            filter: drop-shadow(0 0 10px #5dadec)
+                    drop-shadow(0 0 16px #5dadec)
+                    drop-shadow(0 0 22px #5dadec);
+          }
+          100% {
+            opacity: 0.5;
+            filter: drop-shadow(0 0 6px #5dadec);
+          }
+        }
+
+        @keyframes lineGlow {
+          0% {
+            opacity: 0.5;
+            box-shadow: 0 0 6px #5dadec;
+          }
+          50% {
+            opacity: 1;
+            box-shadow: 0 0 10px #5dadec,
+                        0 0 16px #5dadec,
+                        0 0 22px #5dadec;
+          }
+          100% {
+            opacity: 0.5;
+            box-shadow: 0 0 6px #5dadec;
+          }
+        }
+
+        .timeline-arrow-auto.animate svg polygon {
+          animation: arrowGlow 2s ease-in-out;
+        }
+
+        .timeline-arrow-auto.animate::before,
+        .timeline-arrow-auto.animate::after {
+          animation: lineGlow 2s ease-in-out;
+        }
+
         .timeline-arrow-auto::before {
           margin-bottom: 4px;
         }
@@ -1103,6 +1216,35 @@
           container.insertBefore(arrowDiv, items[i]);
         }
       });
+      </script>
+
+      <script>
+      // Simple scroll detection for middle trigger
+      (function () {
+        let lastMiddleState = new Map();
+
+        window.addEventListener('scroll', () => {
+          document.querySelectorAll('.timeline-arrow-auto').forEach(arrowDiv => {
+            const rect = arrowDiv.getBoundingClientRect();
+            const viewportMiddle = window.innerHeight / 2;
+            const elementMiddle = rect.top + (rect.height / 2);
+            const isInMiddle = Math.abs(elementMiddle - viewportMiddle) < 50;
+            const wasInMiddle = lastMiddleState.get(arrowDiv) || false;
+
+            // Only trigger when entering the middle zone
+            if (isInMiddle && !wasInMiddle) {
+              // Reset animation
+              arrowDiv.classList.remove('animate');
+              void arrowDiv.offsetWidth; // Force reflow
+              // Start animation
+              arrowDiv.classList.add('animate');
+            }
+
+            // Update last state
+            lastMiddleState.set(arrowDiv, isInMiddle);
+          });
+        });
+      })();
       </script>
     </section>
     
