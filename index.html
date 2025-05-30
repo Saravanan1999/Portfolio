@@ -417,6 +417,34 @@
       .timeline-arrow-auto.animate svg polygon {
         animation-play-state: running;
       }
+      .hero-social-links {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 32px;
+        z-index: 20;
+        justify-content: center;
+        pointer-events: none;
+      }
+      .hero-social-links a {
+        pointer-events: auto;
+      }
+      .social-glow {
+        box-shadow: 0 0 0px #5dadec;
+        transition: box-shadow 0.3s, background 0.3s;
+      }
+      .social-glow:hover {
+        box-shadow: 0 0 16px 4px #5dadec, 0 0 32px 8px #5dadec66;
+        background: rgba(93, 173, 236, 0.08);
+      }
+      @media (max-width: 600px) {
+        .hero-social-links {
+          bottom: 12px;
+        }
+        .social-glow {
+          padding: 0.75rem;
+        }
+      }
     </style>
     <!-- three.js core -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
@@ -492,6 +520,21 @@
           <p class="text-white max-w-2xl text-center">
             <span id="description-typing"></span>
           </p>
+        </div>
+        <!-- Social Links at bottom of hero -->
+        <div class="hero-social-links flex gap-8 justify-center items-center">
+          <a href="https://github.com/Saravanan1999" target="_blank" 
+            class="glass-container border border-primary rounded-xl p-4 social-glow">
+            <i class='bx bxl-github text-3xl text-white'></i>
+          </a>
+          <a href="https://linkedin.com/in/Saravanan1999" target="_blank" 
+            class="glass-container border border-primary rounded-xl p-4 social-glow">
+            <i class='bx bxl-linkedin text-3xl text-white'></i>
+          </a>
+          <a href="mailto:sh4621@columbia.edu" 
+            class="glass-container border border-primary rounded-xl p-4 social-glow">
+            <i class='bx bxl-gmail text-3xl text-white'></i>
+          </a>
         </div>
       </div>
     </section>
@@ -1015,7 +1058,7 @@
           <li class="__item __item-center">
             <div class="card-component glass-container border border-primary rounded-2xl p-5 shadow-xl">
               <h2 class="__year">Jan 2022 - May 2024</h2>
-              <h1 class="__title">Data Scientist, MakeMyTrip India Private Limited</h1>
+              <h1 class="__title">Software Engineer/Data Scientist, MakeMyTrip India Private Limited</h1>
               <p class="__text mb-4">Bengaluru, Karnataka, India</p>
               <ul>
                 <li class="mb-4">Built a High-Performance Sentiment Analysis Engine
@@ -1525,6 +1568,45 @@
       </div>
     </section>
 
+    <!-- Contact Form Section -->
+    <section class="px-5 my-32 mx-auto max-w-7xl hidden-section" id="contact">
+      <div class="text-center text-white glass-container p-8 rounded-lg scale-in">
+        <h3 class="text-3xl font-bold mb-5">
+          <span class="text-primary">Let's Talk</span>
+        </h3>
+        <p class="mb-6 md:w-3/4 mx-auto">
+          Have a question or want to work together? Feel free to reach out!
+        </p>
+      </div>
+      
+      <div class="max-w-2xl mx-auto mt-12">
+        <form id="contactForm" class="glass-container border border-primary rounded-2xl p-8">
+          <div class="mb-6">
+            <label for="name" class="block text-white mb-2">Name</label>
+            <input type="text" id="name" name="name" required
+              class="w-full px-4 py-2 bg-transparent border border-primary rounded-lg text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              placeholder="Your name">
+          </div>
+          <div class="mb-6">
+            <label for="email" class="block text-white mb-2">Email</label>
+            <input type="email" id="email" name="email" required
+              class="w-full px-4 py-2 bg-transparent border border-primary rounded-lg text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              placeholder="Your email">
+          </div>
+          <div class="mb-6">
+            <label for="message" class="block text-white mb-2">Message</label>
+            <textarea id="message" name="message" required rows="4"
+              class="w-full px-4 py-2 bg-transparent border border-primary rounded-lg text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              placeholder="Your message"></textarea>
+          </div>
+          <button type="submit"
+            class="w-full py-3 px-6 bg-primary text-white rounded-lg hover:bg-opacity-90 transition-colors">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+
     <div id="resume" class="flex justify-center items-center my-10 hidden-section">
       <a href="./src/SaravananResumeDSMay2025.pdf" download="Saravanan_Resume.pdf">
         <button class="py-4 px-10 rounded-md bg-primary text-white font-bold">
@@ -1629,6 +1711,36 @@
     <script>
       // Initialize typing animations
       document.addEventListener('DOMContentLoaded', function() {
+        // Contact Form Handler
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+          contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+              name: document.getElementById('name').value,
+              email: document.getElementById('email').value,
+              message: document.getElementById('message').value
+            };
+
+            try {
+              // Using EmailJS or similar service would be better for production
+              // This is a simple example using mailto
+              const mailtoLink = `mailto:sh4621@columbia.edu?subject=Contact from ${formData.name}&body=Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
+              window.location.href = mailtoLink;
+              
+              // Clear form
+              contactForm.reset();
+              
+              // Show success message
+              alert('Thank you for your message! I will get back to you soon.');
+            } catch (error) {
+              console.error('Error sending message:', error);
+              alert('Sorry, there was an error sending your message. Please try again.');
+            }
+          });
+        }
+
         // Name typing
         new Typed('#name-typing', {
           strings: ['Saravanan Hari Baskaran'],
